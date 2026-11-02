@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gabung Agen Klik NSC - Zaky Konsultan Bisnis</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        nscRed: '#dc2626',
+                        nscDarkRed: '#b91c1c',
+                        nscDark: '#0f172a',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="font-sans bg-slate-50 text-slate-800 antialiased selection:bg-nscRed selection:text-white">
+
+    <!-- Notification Modal (Custom Alert) -->
+    <div id="customModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 hidden backdrop-blur-sm">
+        <div class="bg-white rounded-2xl p-6 max-w-sm w-full mx-4 shadow-2xl transform transition-all text-center">
+            <div id="modalIcon" class="w-16 h-16 bg-red-100 text-nscRed rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
+                <i class="fa-solid fa-check"></i>
+            </div>
+            <h3 id="modalTitle" class="text-xl font-bold text-slate-900 mb-2">Pendaftaran Berhasil!</h3>
+            <p id="modalMessage" class="text-slate-600 mb-6 text-sm">Terima kasih telah mendaftar sebagai Agen Klik NSC. Zaky akan segera menghubungi Anda melalui WhatsApp.</p>
+            <button onclick="closeModal()" class="w-full py-3 bg-nscRed hover:bg-nscDarkRed text-white font-semibold rounded-xl transition shadow-lg shadow-red-500/30">
+                Tutup & Lanjutkan
+            </button>
+        </div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <header class="fixed top-0 left-0 right-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-100 transition-all">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <!-- Exact Official Klik NSC Logo Replication -->
+                <div class="flex items-center gap-2.5">
+                    <div class="relative w-12 h-12 flex items-center justify-center bg-white rounded-xl shadow-md border border-slate-100 p-1">
+                        <svg viewBox="0 0 200 200" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Blue Arrow Wing -->
+                            <polygon points="15,45 85,25 50,75" fill="#1e3a8a"/>
+                            <!-- Red Swoosh Arrow -->
+                            <path d="M 25,60 C 45,85 110,65 135,35 C 135,35 105,115 55,115 C 40,115 30,100 25,60 Z" fill="#dc2626"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-1.5">
+                            <span class="font-black text-slate-900 tracking-tight text-xl">Klik</span>
+                            <span class="font-black text-blue-900 tracking-tight text-xl">NSC</span>
+                        </div>
+                        <span class="block text-[8px] font-bold uppercase tracking-wider text-slate-500 leading-none">MITRA TERBAIK ANDA</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Desktop Nav -->
+            <nav class="hidden md:flex items-center gap-8 font-medium text-slate-600 text-sm">
+                <a href="#tentang" class="hover:text-nscRed transition">Tentang Zaky</a>
+                <a href="#keuntungan" class="hover:text-nscRed transition">Keuntungan</a>
+                <a href="#cuan" class="hover:text-nscRed transition">Info Cuan</a>
+                <a href="#cara-kerja" class="hover:text-nscRed transition">Cara Kerja</a>
+            </nav>
+
+            <div class="hidden md:block">
+                <a href="#daftar" class="px-5 py-2.5 bg-nscRed hover:bg-nscDarkRed text-white font-semibold text-sm rounded-xl transition shadow-lg shadow-red-500/30 flex items-center gap-2">
+                    <i class="fa-solid fa-user-plus"></i> Gabung Agen Sekarang
+                </a>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button onclick="toggleMobileMenu()" class="md:hidden p-2 text-slate-700 focus:outline-none">
+                <i id="menuIcon" class="fa-solid fa-bars text-xl"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Nav Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-white border-b border-slate-100 px-4 pt-2 pb-6 space-y-3">
+            <a href="#tentang" onclick="toggleMobileMenu()" class="block py-2 text-slate-600 font-medium">Tentang Zaky</a>
+            <a href="#keuntungan" onclick="toggleMobileMenu()" class="block py-2 text-slate-600 font-medium">Keuntungan</a>
+            <a href="#cuan" onclick="toggleMobileMenu()" class="block py-2 text-slate-600 font-medium">Info Cuan</a>
+            <a href="#cara-kerja" onclick="toggleMobileMenu()" class="block py-2 text-slate-600 font-medium">Cara Kerja</a>
+            <a href="#daftar" onclick="toggleMobileMenu()" class="block text-center py-3 bg-nscRed text-white font-semibold rounded-xl shadow-md">Gabung Agen Sekarang</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="pt-32 pb-20 md:pt-40 md:pb-32 bg-gradient-to-b from-red-50/60 via-slate-50 to-white overflow-hidden relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                    <div class="inline-flex items-center gap-2 px-4 py-2 bg-red-100/80 border border-red-200 text-nscRed rounded-full text-xs font-semibold uppercase tracking-wider">
+                        <i class="fa-solid fa-fire"></i> Peluang Bisnis Tanpa Modal • Wonosari
+                    </div>
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight leading-tight">
+                        Raih Cuan Sampai <span class="text-transparent bg-clip-text bg-gradient-to-r from-nscRed to-orange-600">1,5 Juta Per Unit</span> Bersama Agen Klik NSC
+                    </h1>
+                    <p class="text-lg text-slate-600 max-w-2xl mx-auto lg:mx-0">
+                        Halo! Saya <span class="font-bold text-slate-800">Zaky</span>, Konsultan Bisnis Agen di <span class="font-bold text-slate-800">Nusantara Sakti Wonosari</span>. Ajak relasi Anda beli motor Honda impian dan dapatkan komisi fantastis langsung cair!
+                    </p>
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4">
+                        <a href="#daftar" class="w-full sm:w-auto px-8 py-4 bg-nscRed hover:bg-nscDarkRed text-white font-bold rounded-2xl transition shadow-xl shadow-red-500/30 flex items-center justify-center gap-3 text-base">
+                            <i class="fa-solid fa-rocket"></i> Daftar Jadi Agen Gratis
+                        </a>
+                        <a href="https://wa.me/6283190400912?text=Halo%20Zaky,%20saya%20tertarik%20ingin%20bergabung%20menjadi%20Agen%20Klik%20NSC%20Wonosari." target="_blank" class="w-full sm:w-auto px-8 py-4 bg-white hover:bg-slate-100 text-slate-800 border border-slate-200 font-bold rounded-2xl transition flex items-center justify-center gap-3 text-base shadow-sm">
+                            <i class="fa-brands fa-whatsapp text-emerald-600 text-xl"></i> Konsultasi via WhatsApp
+                        </a>
+                    </div>
+                    
+                    <!-- Quick Stats -->
+                    <div class="grid grid-cols-2 gap-6 pt-8 border-t border-slate-200/60 max-w-md mx-auto lg:mx-0">
+                        <div>
+                            <div class="text-2xl lg:text-3xl font-extrabold text-slate-900">100%</div>
+                            <div class="text-xs text-slate-500 font-medium">Tanpa Modal Awal</div>
+                        </div>
+                        <div>
+                            <div class="text-2xl lg:text-3xl font-extrabold text-slate-900">Resmi</div>
+                            <div class="text-xs text-slate-500 font-medium">Nusantara Sakti</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Profile Card Graphic -->
+                <div class="lg:col-span-5 flex justify-center">
+                    <div class="relative w-full max-w-md">
+                        <!-- Decorative glow -->
+                        <div class="absolute -inset-1 bg-gradient-to-r from-red-600 to-orange-500 rounded-3xl blur-xl opacity-30 animate-pulse"></div>
+                        
+                        <div class="relative bg-white rounded-3xl p-8 border border-slate-100 shadow-2xl text-center space-y-6">
+                            <!-- Avatar / Initials -->
+                            <div class="relative w-32 h-32 mx-auto rounded-full bg-gradient-to-tr from-nscRed to-orange-500 p-1 shadow-inner">
+                                <div class="w-full h-full bg-slate-900 rounded-full flex items-center justify-center text-white text-4xl font-extrabold">
+                                    Z
+                                </div>
+                                <span class="absolute bottom-1 right-1 bg-emerald-500 text-white p-2 rounded-full text-xs shadow" title="Aktif & Terverifikasi">
+                                    <i class="fa-solid fa-check"></i>
+                                </span>
+                            </div>
+
+                            <div>
+                                <h3 class="text-2xl font-bold text-slate-900">Zaky</h3>
+                                <p class="text-nscRed font-semibold text-sm mt-0.5">Konsultan Bisnis Agen</p>
+                                <p class="text-xs text-slate-500 mt-1"><i class="fa-solid fa-location-dot text-nscRed"></i> PT Nusantara Sakti Wonosari</p>
+                            </div>
+
+                            <div class="bg-slate-50 rounded-2xl p-4 border border-slate-100 text-left space-y-3">
+                                <div class="flex items-center gap-3 text-xs text-slate-600">
+                                    <div class="w-8 h-8 rounded-lg bg-red-100 text-nscRed flex items-center justify-center shrink-0">
+                                        <i class="fa-solid fa-award"></i>
+                                    </div>
+                                    <div>
+                                        <span class="font-bold text-slate-800 block">Program Resmi Klik NSC</span>
+                                        Peluang cuan jualan motor Honda tanpa stok barang.
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-3 text-xs text-slate-600">
+                                    <div class="w-8 h-8 rounded-lg bg-orange-100 text-orange-600 flex items-center justify-center shrink-0">
+                                        <i class="fa-solid fa-wallet"></i>
+                                    </div>
+                                    <div>
+                                        <span class="font-bold text-slate-800 block">Komisi s/d 1,5 Juta / Unit</span>
+                                        Cair cepat setelah unit motor Honda dikirim ke konsumen.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <a href="#daftar" class="block w-full py-3 bg-slate-900 hover:bg-slate-800 text-white font-semibold text-sm rounded-xl transition shadow-md">
+                                Hubungi Zaky Sekarang
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Tentang Zaky Section -->
+    <section id="tentang" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-3xl mx-auto text-center space-y-4 mb-16">
+                <h2 class="text-xs font-bold uppercase tracking-widest text-nscRed">Tentang Konsultan Anda</h2>
+                <h3 class="text-3xl font-extrabold text-slate-900">Siapa Zaky & Apa itu Agen Klik NSC?</h3>
+                <p class="text-slate-600">
+                    Nusantara Sakti Wonosari hadir memberikan kemudahan bagi siapa saja yang ingin memiliki penghasilan tambahan tanpa modal toko maupun inventaris motor. Cukup referensikan, biarkan kami yang urus sisanya!
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-slate-50 rounded-3xl p-8 border border-slate-100 hover:shadow-xl transition group">
+                    <div class="w-14 h-14 bg-red-100 text-nscRed rounded-2xl flex items-center justify-center text-2xl mb-6 group-hover:bg-nscRed group-hover:text-white transition duration-300">
+                        <i class="fa-solid fa-handshake"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-slate-900 mb-3">Pendampingan Langsung</h4>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        Zaky siap membimbing Anda dari nol cara promosi, mencari prospek, hingga cara closing penjualan motor Honda yang efektif dan cepat.
+                    </p>
+                </div>
+
+                <div class="bg-slate-50 rounded-3xl p-8 border border-slate-100 hover:shadow-xl transition group">
+                    <div class="w-14 h-14 bg-red-100 text-nscRed rounded-2xl flex items-center justify-center text-2xl mb-6 group-hover:bg-nscRed group-hover:text-white transition duration-300">
+                        <i class="fa-solid fa-motorcycle"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-slate-900 mb-3">Unit Motor Honda Lengkap</h4>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        Mulai dari Matic populer seperti Beat, Scoopy, Vario, PCX, hingga motor sport dan bebek tersedia lengkap di Nusantara Sakti Wonosari.
+                    </p>
+                </div>
+
+                <div class="bg-slate-50 rounded-3xl p-8 border border-slate-100 hover:shadow-xl transition group">
+                    <div class="w-14 h-14 bg-red-100 text-nscRed rounded-2xl flex items-center justify-center text-2xl mb-6 group-hover:bg-nscRed group-hover:text-white transition duration-300">
+                        <i class="fa-solid fa-bolt"></i>
+                    </div>
+                    <h4 class="text-xl font-bold text-slate-900 mb-3">Proses Cepat & Transparan</h4>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        Sistem pelacakan prospek yang jelas dan pencairan komisi tepat waktu begitu unit motor berhasil diserahterimakan kepada pembeli.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Keuntungan Menjadi Agen -->
+    <section id="keuntungan" class="py-20 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Attractive Cuan Banner -->
+            <div id="cuan" class="mb-20 bg-gradient-to-r from-red-600 via-orange-600 to-amber-500 rounded-3xl p-8 sm:p-12 text-white shadow-2xl relative overflow-hidden text-center">
+                <div class="absolute -right-10 -bottom-10 w-60 h-60 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
+                <div class="relative z-10 max-w-3xl mx-auto space-y-4">
+                    <span class="inline-block px-4 py-1.5 bg-white/25 text-white backdrop-blur-md rounded-full text-xs font-bold uppercase tracking-wider">
+                        <i class="fa-solid fa-fire text-amber-300"></i> Potensi Penghasilan Tanpa Batas
+                    </span>
+                    <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight">
+                        Raih Cuan Sampai 1,5 Juta Per Unit!
+                    </h2>
+                    <p class="text-red-100 text-base sm:text-lg">
+                        Bantu jualkan motor Honda melalui program <span class="font-bold underline">Klik NSC</span>. Semakin banyak unit yang berhasil terjual dari referensi Anda, semakin besar pula komisi tunai yang langsung cair ke rekening Anda!
+                    </p>
+                    <div class="pt-4 flex flex-wrap justify-center gap-4">
+                        <a href="#daftar" class="px-8 py-4 bg-white text-nscRed hover:bg-slate-100 font-extrabold rounded-2xl transition shadow-lg">
+                            <i class="fa-solid fa-wallet mr-2"></i> Mulai Cari Cuan Sekarang
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <div class="lg:col-span-5 space-y-6">
+                    <h2 class="text-xs font-bold uppercase tracking-widest text-nscRed">Keuntungan Eksklusif</h2>
+                    <h3 class="text-3xl font-extrabold text-slate-900 leading-tight">Mengapa Anda Harus Bergabung dengan Klik NSC Wonosari?</h3>
+                    <p class="text-slate-600">
+                        Menjadi Agen Klik NSC memberikan kebebasan waktu penuh. Cocok untuk mahasiswa, karyawan, ibu rumah tangga, maupun wiraswasta yang ingin menambah pundi-pundi rupiah.
+                    </p>
+                    <div class="space-y-4 pt-2">
+                        <div class="flex items-start gap-4">
+                            <div class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0 mt-1">
+                                <i class="fa-solid fa-check text-sm"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-900">Tanpa Modal & Risiko Nol</h4>
+                                <p class="text-slate-600 text-sm">Tidak perlu stok barang atau menyewa tempat usaha.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0 mt-1">
+                                <i class="fa-solid fa-check text-sm"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-900">Waktu Kerja Fleksibel</h4>
+                                <p class="text-slate-600 text-sm">Bisa dikerjakan kapan saja dan di mana saja melalui smartphone Anda.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0 mt-1">
+                                <i class="fa-solid fa-check text-sm"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-900">Dukungan Materi Promosi</h4>
+                                <p class="text-slate-600 text-sm">Disediakan banner, katalog, dan konten siap share untuk sosial media Anda.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-7">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        
+                        <div class="bg-white p-8 rounded-3xl border border-slate-100 shadow-lg space-y-4">
+                            <div class="w-12 h-12 rounded-2xl bg-red-100 text-nscRed flex items-center justify-center text-xl">
+                                <i class="fa-solid fa-bullhorn"></i>
+                            </div>
+                            <h4 class="text-lg font-bold text-slate-900">Cukup Bagikan Info</h4>
+                            <p class="text-sm text-slate-600">Temukan teman, saudara, atau tetangga yang ingin beli motor Honda, lalu teruskan datanya kepada Zaky.</p>
+                        </div>
+
+                        <div class="bg-white p-8 rounded-3xl border border-slate-100 shadow-lg space-y-4">
+                            <div class="w-12 h-12 rounded-2xl bg-orange-100 text-orange-600 flex items-center justify-center text-xl">
+                                <i class="fa-solid fa-award"></i>
+                            </div>
+                            <h4 class="text-lg font-bold text-slate-900">Reward & Bonus Bulanan</h4>
+                            <p class="text-sm text-slate-600">Dapatkan kesempatan meraih reward tambahan berupa bonus prestasi jika berhasil mencapai target penjualan tertentu.</p>
+                        </div>
+
+                        <div class="bg-white p-8 rounded-3xl border border-slate-100 shadow-lg space-y-4">
+                            <div class="w-12 h-12 rounded-2xl bg-blue-100 text-blue-600 flex items-center justify-center text-xl">
+                                <i class="fa-solid fa-graduation-cap"></i>
+                            </div>
+                            <h4 class="text-lg font-bold text-slate-900">Pelatihan & Gathering</h4>
+                            <p class="text-sm text-slate-600">Dapatkan akses ke program training sales berkala untuk mempertajam skill negosiasi dan marketing Anda.</p>
+                        </div>
+
+                        <div class="bg-white p-8 rounded-3xl border border-slate-100 shadow-lg space-y-4">
+                            <div class="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-xl">
+                                <i class="fa-solid fa-shield-halved"></i>
+                            </div>
+                            <h4 class="text-lg font-bold text-slate-900">Perusahaan Terpercaya</h4>
+                            <p class="text-sm text-slate-600">Bernaung di bawah PT Nusantara Sakti yang telah berpengalaman luas melayani masyarakat Indonesia.</p>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Cara Kerja Step-by-Step -->
+    <section id="cara-kerja" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-3xl mx-auto text-center space-y-4 mb-16">
+                <h2 class="text-xs font-bold uppercase tracking-widest text-nscRed">Langkah Mudah</h2>
+                <h3 class="text-3xl font-extrabold text-slate-900">Bagaimana Cara Kerjanya?</h3>
+                <p class="text-slate-600">
+                    Hanya butuh 3 langkah sederhana untuk mulai menghasilkan uang bersama Nusantara Sakti Wonosari.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+                
+                <div class="bg-white rounded-3xl p-8 border border-slate-100 shadow-md relative text-center space-y-4">
+                    <div class="w-12 h-12 bg-red-100 text-nscRed font-extrabold text-lg rounded-2xl flex items-center justify-center mx-auto">
+                        01
+                    </div>
+                    <h4 class="text-xl font-bold text-slate-900">Daftar Jadi Agen</h4>
+                    <p class="text-slate-600 text-sm">
+                        Isi formulir pendaftaran di bawah ini. Zaky akan menghubungi Anda dan memberikan panduan singkat serta ID Agen resmi.
+                    </p>
+                </div>
+
+                <div class="bg-white rounded-3xl p-8 border border-slate-100 shadow-md relative text-center space-y-4">
+                    <div class="w-12 h-12 bg-red-100 text-nscRed font-extrabold text-lg rounded-2xl flex items-center justify-center mx-auto">
+                        02
+                    </div>
+                    <h4 class="text-xl font-bold text-slate-900">Referensi & Promosi</h4>
+                    <p class="text-slate-600 text-sm">
+                        Cari teman atau relasi yang ingin membeli motor Honda. Kirimkan data prospek atau arahkan mereka langsung ke Zaky.
+                    </p>
+                </div>
+
+                <div class="bg-white rounded-3xl p-8 border border-slate-100 shadow-md relative text-center space-y-4">
+                    <div class="w-12 h-12 bg-red-100 text-nscRed font-extrabold text-lg rounded-2xl flex items-center justify-center mx-auto">
+                        03
+                    </div>
+                    <h4 class="text-xl font-bold text-slate-900">Terima Komisi</h4>
+                    <p class="text-slate-600 text-sm">
+                        Begitu motor Honda dikirim ke pembeli, komisi tunai langsung cair ke rekening Anda hingga Rp 1,5 Juta per unit!
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Registration Form Section -->
+    <section id="daftar" class="py-20 bg-white relative">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-gradient-to-br from-slate-900 to-slate-800 rounded-3xl p-8 sm:p-12 shadow-2xl text-white relative overflow-hidden">
+                <!-- Decorative background patterns -->
+                <div class="absolute -right-20 -bottom-20 w-80 h-80 bg-nscRed/20 rounded-full blur-3xl pointer-events-none"></div>
+
+                <div class="relative z-10 max-w-2xl mx-auto text-center space-y-4 mb-10">
+                    <span class="px-4 py-1.5 bg-red-500/20 text-red-300 rounded-full text-xs font-bold uppercase tracking-wider inline-block">
+                        Formulir Pendaftaran Resmi
+                    </span>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight">Bergabung Bersama Zaky Sekarang</h2>
+                    <p class="text-slate-300 text-sm sm:text-base">
+                        Isi data diri Anda di bawah ini. Zaky akan segera memproses pendaftaran Anda dan mengirimkan akses ke program Agen Klik NSC Nusantara Sakti Wonosari.
+                    </p>
+                </div>
+
+                <form id="agentForm" onsubmit="handleFormSubmit(event)" class="relative z-10 space-y-6 max-w-xl mx-auto">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Nama Lengkap Sesuai KTP</label>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 pl-4 flex items-center text-slate-400">
+                                <i class="fa-solid fa-user"></i>
+                            </span>
+                            <input type="text" id="fullName" required placeholder="Contoh: Budi Santoso" class="w-full pl-11 pr-4 py-3.5 bg-slate-800/80 border border-slate-700 rounded-2xl text-white placeholder-slate-500 focus:outline-none focus:border-nscRed focus:ring-1 focus:ring-nscRed text-sm transition">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Nomor WhatsApp (Aktif)</label>
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 pl-4 flex items-center text-slate-400">
+                                    <i class="fa-brands fa-whatsapp text-lg"></i>
+                                </span>
+                                <input type="tel" id="whatsapp" required placeholder="08123456789" class="w-full pl-11 pr-4 py-3.5 bg-slate-800/80 border border-slate-700 rounded-2xl text-white placeholder-slate-500 focus:outline-none focus:border-nscRed focus:ring-1 focus:ring-nscRed text-sm transition">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Domisili / Kota</label>
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 pl-4 flex items-center text-slate-400">
+                                    <i class="fa-solid fa-location-dot"></i>
+                                </span>
+                                <input type="text" id="domicile" required placeholder="Contoh: Wonosari, Gunungkidul" class="w-full pl-11 pr-4 py-3.5 bg-slate-800/80 border border-slate-700 rounded-2xl text-white placeholder-slate-500 focus:outline-none focus:border-nscRed focus:ring-1 focus:ring-nscRed text-sm transition">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Pengalaman / Pekerjaan Saat Ini</label>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 pl-4 pt-3.5 text-slate-400">
+                                <i class="fa-solid fa-briefcase"></i>
+                            </span>
+                            <select id="experience" class="w-full pl-11 pr-4 py-3.5 bg-slate-800/80 border border-slate-700 rounded-2xl text-white focus:outline-none focus:border-nscRed focus:ring-1 focus:ring-nscRed text-sm transition">
+                                <option value="Pemula / Belum Pernah" class="bg-slate-900">Pemula / Belum Pernah</option>
+                                <option value="Sales / Marketing" class="bg-slate-900">Sales / Marketing</option>
+                                <option value="Karyawan Swasta" class="bg-slate-900">Karyawan Swasta</option>
+                                <option value="Ibu Rumah Tangga" class="bg-slate-900">Ibu Rumah Tangga</option>
+                                <option value="Mahasiswa / Pelajar" class="bg-slate-900">Mahasiswa / Pelajar</option>
+                                <option value="Wiraswasta" class="bg-slate-900">Wiraswasta</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="w-full py-4 bg-nscRed hover:bg-nscDarkRed text-white font-bold rounded-2xl transition shadow-xl shadow-red-500/30 flex items-center justify-center gap-2 text-base">
+                        <i class="fa-solid fa-paper-plane"></i> Kirim Pendaftaran Sekarang
+                    </button>
+
+                    <p class="text-xs text-slate-400 text-center">
+                        <i class="fa-solid fa-lock text-emerald-400"></i> Data Anda aman dan hanya digunakan untuk keperluan verifikasi agen Nusantara Sakti Wonosari.
+                    </p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 text-slate-400 py-12 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 pb-12 border-b border-slate-800">
+                <div class="space-y-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 bg-white rounded-xl flex items-center justify-center p-1 shadow-md">
+                            <svg viewBox="0 0 200 200" class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+                                <polygon points="15,45 85,25 50,75" fill="#1e3a8a"/>
+                                <path d="M 25,60 C 45,85 110,65 135,35 C 135,35 105,115 55,115 C 40,115 30,100 25,60 Z" fill="#dc2626"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="flex items-center gap-1">
+                                <span class="font-black text-white text-lg">Klik</span>
+                                <span class="font-black text-blue-400 text-lg">NSC</span>
+                            </div>
+                            <span class="text-[8px] font-bold text-slate-400 uppercase tracking-wider">MITRA TERBAIK ANDA</span>
+                        </div>
+                    </div>
+                    <p class="text-sm text-slate-400">
+                        Pusat penjualan motor Honda dan pembiayaan terpercaya. Bergabunglah bersama Agen Klik NSC dan raih penghasilan tanpa batas bersama Konsultan Zaky.
+                    </p>
+                </div>
+
+                <div class="space-y-3">
+                    <h4 class="text-white font-bold text-sm uppercase tracking-wider">Kontak Konsultan</h4>
+                    <p class="text-sm"><i class="fa-solid fa-user-tie text-nscRed mr-2"></i> Zaky (Konsultan Bisnis Agen)</p>
+                    <p class="text-sm"><i class="fa-solid fa-location-dot text-nscRed mr-2"></i> Wonosari, Gunungkidul, Yogyakarta</p>
+                    <p class="text-sm"><i class="fa-brands fa-whatsapp text-emerald-500 mr-2"></i> +62 831-9040-0912</p>
+                </div>
+
+                <div class="space-y-3">
+                    <h4 class="text-white font-bold text-sm uppercase tracking-wider">Tautan Cepat</h4>
+                    <div class="flex flex-col space-y-2 text-sm">
+                        <a href="#tentang" class="hover:text-white transition">Tentang Zaky</a>
+                        <a href="#keuntungan" class="hover:text-white transition">Keuntungan Agen</a>
+                        <a href="#cuan" class="hover:text-white transition">Info Cuan</a>
+                        <a href="#cara-kerja" class="hover:text-white transition">Cara Kerja</a>
+                        <a href="#daftar" class="hover:text-white transition">Formulir Pendaftaran</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500">
+                <p>&copy; 2026 Zaky - Nusantara Sakti Wonosari. All rights reserved.</p>
+                <div class="flex space-x-6 mt-4 sm:mt-0">
+                    <a href="#" class="hover:text-slate-400 transition">Kebijakan Privasi</a>
+                    <a href="#" class="hover:text-slate-400 transition">Syarat & Ketentuan</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Interactions -->
+    <script>
+        // Toggle Mobile Menu
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            const icon = document.getElementById('menuIcon');
+            menu.classList.toggle('hidden');
+            if(menu.classList.contains('hidden')) {
+                icon.className = "fa-solid fa-bars text-xl";
+            } else {
+                icon.className = "fa-solid fa-xmark text-xl";
+            }
+        }
+
+        // Form Submit Handler & Custom Modal
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('fullName').value;
+            const whatsapp = document.getElementById('whatsapp').value;
+            const domicile = document.getElementById('domicile').value;
+            const experience = document.getElementById('experience').value;
+
+            // Show custom modal
+            const modal = document.getElementById('customModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalMessage = document.getElementById('modalMessage');
+
+            modalTitle.innerText = "Pendaftaran Berhasil, " + name + "!";
+            modalMessage.innerHTML = "Terima kasih telah mendaftar. Zaky akan segera menghubungi Anda melalui nomor WhatsApp <b>" + whatsapp + "</b> untuk proses aktivasi Agen Klik NSC.";
+            
+            modal.classList.remove('hidden');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('customModal');
+            modal.classList.add('hidden');
+            document.getElementById('agentForm').reset();
+        }
+    </script>
+</body>
+</html>
